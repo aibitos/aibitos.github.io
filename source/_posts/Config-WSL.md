@@ -72,6 +72,16 @@ sudo apt install emacs25
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ```
 
+安装之后在 `xshell` 里显示效果会有问题，在 `~/.zshrc` 里添加
+
+``` bash
+export TERM=xterm-256color
+```
+
+`xshell` 里把界面字体改成 `Source Code Pro for Powerline`，具体配置参考下图
+
+![](/images/wsl_xshell_conf.png)
+
 # 5. 配置 `git`
 
 ``` bash
