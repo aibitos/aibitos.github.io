@@ -80,7 +80,7 @@ export TERM=xterm-256color
 
 `xshell` 里把界面字体改成 `Source Code Pro for Powerline`，具体配置参考下图
 
-![](/images/wsl_xshell_conf.png)
+![](/images/wsl_xshell_conf.PNG)
 
 # 5. 配置 `git`
 
