@@ -12,7 +12,14 @@ tags: Windows SubSystem Linux
 
 就我本人而言，还是喜欢看到这种竞争的。
 
-安装就不说了，下面直接上配置，本人装的是 `Ubuntu 16.04`，另此文会不断更新。
+# 1.1 `WSL` 安装
+
+现在我知道有两种方式：
+
+1. 在 `Windows Store` 中安装
+2. 使用 [LxRunOffline](https://github.com/DDoSolitary/LxRunOffline)
+
+建议使用第二种，因为第一种会默认安装 `C` 盘，移动会比较麻烦，而第二种可以随意指定位置，同时支持的镜像也会更多。
 
 # 2. 配置 `zsh`
 
@@ -33,7 +40,7 @@ curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | 
 ## 3.1 安装 `SSH`
 
 ``` bash
-sudo apt install openssh
+sudo apt install openssh-server
 sudo service ssh start
 ```
 
@@ -63,13 +70,19 @@ sudo apt update
 sudo apt upgrade
 sudo add-apt-repository ppa:kelleyk/emacs
 sudo apt update
-sudo apt install emacs25
+sudo apt install emacs25-nox
 ```
 
 ## 4.2 安装 `spacemacs`
 
 ``` bash
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+```
+
+在 `.spacemacs` 中的 `user-init()`中添加 
+
+``` lisp
+(set-terminal-coding-system 'utf-8)
 ```
 
 安装之后在 `xshell` 里显示效果会有问题，在 `~/.zshrc` 里添加
@@ -81,6 +94,7 @@ export TERM=xterm-256color
 `xshell` 里把界面字体改成 `Source Code Pro for Powerline`，具体配置参考下图
 
 ![](/images/wsl_xshell_conf.PNG)
+
 
 # 5. 配置 `git`
 
