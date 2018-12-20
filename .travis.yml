@@ -13,7 +13,7 @@ after_script:
   - git config user.name "${Author}"
   - git config user.email "${Email}"
   - git add .
-  - git commit -m "[release]: update blog from travis ci"
+  - git commit -m "update blog from travis ci"
   - git push --force --quiet "https://${GitHubToken}@${RepoRef}" master:master
 
 branches:
