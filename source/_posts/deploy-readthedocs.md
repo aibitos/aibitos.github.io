@@ -15,11 +15,8 @@ tags: readthedocs, ubuntu
 ## 2. Requirements
 
 * Ubuntu ( version = 16.04.2 LTS )
-
 * Python ( version >= 3.6 )
-
 * Git ( version >= 2.17.0 )
-
 * Pip ( version >= 1.5 )
 
 ```bash
