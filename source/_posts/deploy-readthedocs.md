@@ -72,7 +72,7 @@ python manage.py runserver 0.0.0.0:8080
 
 每次到这个时候，都应该怀着激动的心情，有一种成败在此一举的感觉。这时就可以用浏览器打开，用之前创建的超级用户登录，这样就能看到大致这样的界面了。
 
-![\images\readthedocs_1](..\images\readthedocs_1.jpg)
+![\images\readthedocs_1](/images/readthedocs_1.jpg)
 
 ## 3.6 基本配置
 
@@ -122,7 +122,7 @@ python manage.py runserver 0.0.0.0:8080
 
 `readthedocs` 的项目网上已经有了很多的介绍了，这个不再赘述。假设你现在已经拥有了一个这样的项目，并在根目录下有 `conf.py` ，这里重点看一下 `Advanced Settings`。
 
-![\images\readthedocs_3](..\images\readthedocs_3.jpg)
+![\images\readthedocs_3](/images/readthedocs_3.jpg)
 
 上图取消了 `PDF` 和 `EPUB` 的生成，因为这个生成软件并未配置，作为开发文档系统来讲没有必要，提高 `build` 速度。
 
@@ -132,7 +132,7 @@ python manage.py runserver 0.0.0.0:8080
 
 报错如下图：
 
-![\images\readthedocs_2](..\images\readthedocs_2.jpg)
+![\images\readthedocs_2](/images/readthedocs_2.jpg)
 
 这个是 `Git` 版本过低的原因， `Ubuntu 16.04` 默认源里 `Git` 的版本是 `2.7.x`，没有 `--prune-tags` 这个参数导致 `build` 出错，这时我们只需要更新 `Git` 版本即可。
 
