@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Windows SubSystem Linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. Windows SubSystem Linux 介绍个人Linux属于一帮爱折腾家伙的玩物，之前想玩一般是在虚拟机里玩，而Windows 在 Windows 10 里直接引入了这么一个子系统，可以说这还是相当给力的。 有很多开发者都喜欢用 Mac，包括我，他们给出的理由是 OSX 对开发者友好，而 WSL 的引入恰好可以弥补这一点，为 Windows 系统争取更多的使用者。 就我本人而言，还">
+<meta name="keywords" content="Windows SubSystem Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置 Windows SubSystem Linux">
+<meta property="og:url" content="http://aibitos.com/2018/01/28/Config-WSL/index.html">
+<meta property="og:site_name" content="Keep Moving">
+<meta property="og:description" content="1. Windows SubSystem Linux 介绍个人Linux属于一帮爱折腾家伙的玩物，之前想玩一般是在虚拟机里玩，而Windows 在 Windows 10 里直接引入了这么一个子系统，可以说这还是相当给力的。 有很多开发者都喜欢用 Mac，包括我，他们给出的理由是 OSX 对开发者友好，而 WSL 的引入恰好可以弥补这一点，为 Windows 系统争取更多的使用者。 就我本人而言，还">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://aibitos.com/images/wsl_xshell_conf.PNG">
+<meta property="og:updated_time" content="2019-01-03T15:04:14.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="配置 Windows SubSystem Linux">
+<meta name="twitter:description" content="1. Windows SubSystem Linux 介绍个人Linux属于一帮爱折腾家伙的玩物，之前想玩一般是在虚拟机里玩，而Windows 在 Windows 10 里直接引入了这么一个子系统，可以说这还是相当给力的。 有很多开发者都喜欢用 Mac，包括我，他们给出的理由是 OSX 对开发者友好，而 WSL 的引入恰好可以弥补这一点，为 Windows 系统争取更多的使用者。 就我本人而言，还">
+<meta name="twitter:image" content="http://aibitos.com/images/wsl_xshell_conf.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://aibitos.com/2018/01/28/Config-WSL/">
+
+
+
+
+
+  <title>配置 Windows SubSystem Linux | Keep Moving</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Keep Moving</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://aibitos.com/2018/01/28/Config-WSL/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dawn">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Keep Moving">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">配置 Windows SubSystem Linux</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-28T14:56:42+00:00">
+                2018-01-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-Windows-SubSystem-Linux-介绍"><a href="#1-Windows-SubSystem-Linux-介绍" class="headerlink" title="1. Windows SubSystem Linux 介绍"></a>1. <code>Windows SubSystem Linux</code> 介绍</h1><p>个人Linux属于一帮爱折腾家伙的玩物，之前想玩一般是在虚拟机里玩，而<code>Windows</code> 在 <code>Windows 10</code> 里直接引入了这么一个子系统，可以说这还是相当给力的。</p>
+<p>有很多开发者都喜欢用 <code>Mac</code>，包括我，他们给出的理由是 <code>OSX</code> 对开发者友好，而 <code>WSL</code> 的引入恰好可以弥补这一点，为 <code>Windows</code> 系统争取更多的使用者。</p>
+<p>就我本人而言，还是喜欢看到这种竞争的。</p>
+<h1 id="1-1-WSL-安装"><a href="#1-1-WSL-安装" class="headerlink" title="1.1 WSL 安装"></a>1.1 <code>WSL</code> 安装</h1><p>现在我知道有两种方式：</p>
+<ol>
+<li>在 <code>Windows Store</code> 中安装</li>
+<li>使用 <a href="https://github.com/DDoSolitary/LxRunOffline" target="_blank" rel="noopener">LxRunOffline</a></li>
+</ol>
+<p>建议使用第二种，因为第一种会默认安装 <code>C</code> 盘，移动会比较麻烦，而第二种可以随意指定位置，同时支持的镜像也会更多。</p>
+<h1 id="2-配置-zsh"><a href="#2-配置-zsh" class="headerlink" title="2. 配置 zsh"></a>2. 配置 <code>zsh</code></h1><h2 id="2-1-安装-zsh"><a href="#2-1-安装-zsh" class="headerlink" title="2.1 安装 zsh"></a>2.1 安装 <code>zsh</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install zsh</span><br><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-安装-oh-my-zsh"><a href="#2-2-安装-oh-my-zsh" class="headerlink" title="2.2 安装 oh-my-zsh"></a>2.2 安装 <code>oh-my-zsh</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh</span><br></pre></td></tr></table></figure>
+<h1 id="3-配置-SSH"><a href="#3-配置-SSH" class="headerlink" title="3. 配置 SSH"></a>3. 配置 <code>SSH</code></h1><h2 id="3-1-安装-SSH"><a href="#3-1-安装-SSH" class="headerlink" title="3.1 安装 SSH"></a>3.1 安装 <code>SSH</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br><span class="line">sudo service ssh start</span><br></pre></td></tr></table></figure>
+<h2 id="3-2-配置"><a href="#3-2-配置" class="headerlink" title="3.2 配置"></a>3.2 配置</h2><p>做完上述的应该是连不上的，需要修改下配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ListenAddress 0.0.0.0  #去掉原配置的注释即可；监听本地回环</span><br><span class="line">UsePrivilegeSeparation no # yes-&gt;no；不知道为什么，不改连接会理解关闭</span><br><span class="line">PasswordAuthentication yes # no-&gt;yes；不改只能使用秘钥登陆</span><br><span class="line">Port XXXX # 默认的22可能需要特殊权限（Windows系统上），没有做过测试。</span><br></pre></td></tr></table></figure>
+<h1 id="4-配置-Spacemacs"><a href="#4-配置-Spacemacs" class="headerlink" title="4. 配置 Spacemacs"></a>4. 配置 <code>Spacemacs</code></h1><h2 id="4-1-安装-emacs25"><a href="#4-1-安装-emacs25" class="headerlink" title="4.1 安装 emacs25"></a>4.1 安装 <code>emacs25</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br><span class="line">sudo add-apt-repository ppa:kelleyk/emacs</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install emacs25-nox</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-安装-spacemacs"><a href="#4-2-安装-spacemacs" class="headerlink" title="4.2 安装 spacemacs"></a>4.2 安装 <code>spacemacs</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/syl20bnr/spacemacs ~/.emacs.d</span><br></pre></td></tr></table></figure>
+<p>在 <code>.spacemacs</code> 中的 <code>user-init()</code>中添加 </p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">set-terminal-coding-system</span> 'utf-8)</span><br></pre></td></tr></table></figure>
+<p>安装之后在 <code>xshell</code> 里显示效果会有问题，在 <code>~/.zshrc</code> 里添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> TERM=xterm-256color</span><br></pre></td></tr></table></figure>
+<p><code>xshell</code> 里把界面字体改成 <code>Source Code Pro for Powerline</code>，具体配置参考下图</p>
+<p><img src="/images/wsl_xshell_conf.PNG" alt=""></p>
+<h1 id="5-配置-git"><a href="#5-配置-git" class="headerlink" title="5. 配置 git"></a>5. 配置 <code>git</code></h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.editor <span class="string">"vim"</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Windows-SubSystem-Linux/" rel="tag"># Windows SubSystem Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/12/lftp/" rel="next" title="lftp">
+                <i class="fa fa-chevron-left"></i> lftp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/02/deploy-readthedocs/" rel="prev" title="Ubuntu 16.04 LTS 部署 readthedocs 文档系统">
+                Ubuntu 16.04 LTS 部署 readthedocs 文档系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Dawn</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Windows-SubSystem-Linux-介绍"><span class="nav-text">1. Windows SubSystem Linux 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-WSL-安装"><span class="nav-text">1.1 WSL 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-配置-zsh"><span class="nav-text">2. 配置 zsh</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-安装-zsh"><span class="nav-text">2.1 安装 zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-安装-oh-my-zsh"><span class="nav-text">2.2 安装 oh-my-zsh</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-配置-SSH"><span class="nav-text">3. 配置 SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-安装-SSH"><span class="nav-text">3.1 安装 SSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-配置"><span class="nav-text">3.2 配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-配置-Spacemacs"><span class="nav-text">4. 配置 Spacemacs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-安装-emacs25"><span class="nav-text">4.1 安装 emacs25</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-安装-spacemacs"><span class="nav-text">4.2 安装 spacemacs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-配置-git"><span class="nav-text">5. 配置 git</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dawn</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
