@@ -8,11 +8,11 @@ tags: readthedocs, ubuntu
 
 ***Key Words***: Ubuntu, readthedocs
 
-## 1. Intruduction
+## Intruduction
 
 文档系统在一个软件开发流程中的地位越来越高，而 `readthedocs` 这款文档系统也是这样应运而生。正如其[官方](https://readthedocs.org/)说明：`Read the Docs simplifies software documentation by automating building, versioning, and hosting of your docs for you.` 安装流程大致依照 [官方安装文档](https://docs.readthedocs.io/en/latest/install.html)
 
-## 2. Requirements
+## Requirements
 
 * Ubuntu ( version = 16.04.2 LTS )
 * Python ( version >= 3.6 )
@@ -26,23 +26,23 @@ sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
 sudo apt-get install redis-server
 ```
 
-## 3. Get and Run Read the Docs
+## Get and Run Read the Docs
 
-### 3.1 从 `github` 上获取最新系统
+### 从 `github` 上获取最新系统
 
 ```bash
 git clone https://github.com/rtfd/readthedocs.org.git
 cd readthedocs.org
 ```
 
-### 3.2 创建虚拟环境并激活
+### 创建虚拟环境并激活
 
 ```bash
 virtualenv venv
 source venv/bin/activate
 ```
 
-### 3.3 `Pip` 安装依赖包，类似 `npm install`
+### `Pip` 安装依赖包，类似 `npm install`
 
 ```bash
 pip install -r requirements.txt
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 
 这个时间较长，建议不要在这里等待
 
-### 3.4 初始化系统
+### 初始化系统
 
 ```bash
 # 创建数据库
@@ -61,7 +61,7 @@ python manage.py createsuperuser
 python manage.py collectstatic
 ```
 
-### 3.5 运行系统
+### 运行系统
 
 ```bash
 python manage.py runserver 0.0.0.0:8080
@@ -71,7 +71,7 @@ python manage.py runserver 0.0.0.0:8080
 
 ![\images\readthedocs_1](/images/readthedocs_1.jpg)
 
-## 3.6 基本配置
+### 基本配置
 
 修改 `readthedocs/settings/dev.py` 文件，使其可以不用邮箱验证就可以使用本系统
 
@@ -115,7 +115,7 @@ python manage.py runserver 0.0.0.0:8080
 +    }
 ```
 
-## 4. 导入项目生成文档
+## 导入项目生成文档
 
 `readthedocs` 的项目网上已经有了很多的介绍了，这个不再赘述。假设你现在已经拥有了一个这样的项目，并在根目录下有 `conf.py` ，这里重点看一下 `Advanced Settings`。
 
@@ -123,9 +123,9 @@ python manage.py runserver 0.0.0.0:8080
 
 上图取消了 `PDF` 和 `EPUB` 的生成，因为这个生成软件并未配置，作为开发文档系统来讲没有必要，提高 `build` 速度。
 
-## 5. Fix Issues
+## Fix Issues
 
-## 5.1 更新文档不生效，build 报错
+### 更新文档不生效，build 报错
 
 报错如下图：
 
@@ -142,15 +142,15 @@ sudo apt-get update
 sudo apt-get install git
 ```
 
-### 5.2 代码无法高亮
+### 代码无法高亮
 
 这个是 `sphinx-rtd-theme` 的 bug，其已在 `0.3` 之后的版本解决，所以通过 `pip show sphinx-rtd-theme` 查看下版本号。如果确实过低了，建议按照上述流程再走一遍。
 
-## 6. Conclusion
+## Conclusion
 
 整体来讲，部署不算复杂，但其中或多或少有点坑，记录一下，不要再让其他人摸着石头过河。对于一个文档系统，最重要的是内容，现在这样一个简约而不简单的系统恰好符合预期，感谢 `readthedocs` 团队。
 
-## 7. Reference
+## Reference
 
 1. [https://docs.readthedocs.io/en/latest/install.html](https://docs.readthedocs.io/en/latest/install.html)
 2. [https://blog.csdn.net/Ezreal_King/article/details/79999131](https://blog.csdn.net/Ezreal_King/article/details/79999131)
